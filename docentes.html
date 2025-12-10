@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docente - Pronunciation App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #F8F9FA;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: #0066FF;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+
+    .logo-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+    }
+
+    .logo-img {
+      width: 37px;
+      /* Ajusta el tamaño horizontal del logo */
+      height: auto;
+      /* Mantiene la proporción */
+      margin-right: 10px;
+      /* Espacio entre logo y texto */
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+    }
+
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .welcome-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .welcome-subtitle {
+      font-size: 14px;
+      color: #6B7280;
+      font-weight: 400;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 14px;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      border-color: #0066FF;
+      box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    }
+
+    .form-input:disabled {
+      background: #F3F4F6;
+      color: #9CA3AF;
+      cursor: not-allowed;
+    }
+
+    .form-input::placeholder {
+      color: #9CA3AF;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: #6B7280;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-toggle:hover {
+      color: #1a1a1a;
+    }
+
+    .password-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-top: -12px;
+      margin-bottom: 20px;
+    }
+
+    .forgot-password a {
+      font-size: 13px;
+      color: #0066FF;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px 24px;
+      background: #0066FF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary:hover {
+      background: #0052CC;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      padding: 10px 20px;
+      background: #F3F4F6;
+      color: #374151;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-secondary:hover {
+      background: #E5E7EB;
+    }
+
+    .btn-danger {
+      padding: 10px 20px;
+      background: #EF4444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-danger:hover {
+      background: #DC2626;
+    }
+
+    .footer-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #6B7280;
+    }
+
+    .footer-link a {
+      color: #0066FF;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-link a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .alert.success {
+      background: #D1FAE5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+
+    .alert.error {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+
+    .alert.info {
+      background: #DBEAFE;
+      color: #1E40AF;
+      border: 1px solid #BFDBFE;
+    }
+
+    #panelSection {
+      display: none;
+      background: #F8F9FA;
+      min-height: 100vh;
+      width: 100%;
+      padding: 0;
+    }
+
+    #panelSection.active {
+      display: block;
+    }
+
+    .dashboard-header {
+      background: white;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .dashboard-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dashboard-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: #0066FF;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dashboard-logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .dashboard-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      font-size: 16px;
+      font-weight: 600;
+      color: #6B7280;
+    }
+
+    .user-avatar:hover {
+      box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: 60px;
+      right: 32px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      padding: 8px;
+      min-width: 280px;
+      z-index: 1000;
+      display: none;
+    }
+
+    .user-dropdown.active {
+      display: block;
+    }
+
+    .dropdown-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid #E5E7EB;
+      margin-bottom: 8px;
+    }
+
+    .dropdown-email {
+      font-size: 13px;
+      color: #6B7280;
+      margin-top: 4px;
+    }
+
+    .dropdown-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .dropdown-item:hover {
+      background: #F3F4F6;
+    }
+
+    .dropdown-item svg {
+      width: 18px;
+      height: 18px;
+      fill: #6B7280;
+    }
+
+    .dropdown-item.danger {
+      color: #DC2626;
+    }
+
+    .dropdown-item.danger svg {
+      fill: #DC2626;
+    }
+
+    .notification-icon {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .notification-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: #6B7280;
+    }
+
+    .dashboard-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px;
+      display: flex;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .sidebar-content {
+      width: 380px;
+      flex-shrink: 0;
+    }
+
+    .students-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: #0066FF;
+      box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: #9CA3AF;
+    }
+
+    .students-table {
+      width: 100%;
+    }
+
+    .students-table thead {
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .students-table th {
+      padding: 12px 8px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6B7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .students-table td {
+      padding: 16px 8px;
+      border-bottom: 1px solid #F3F4F6;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .students-table tbody tr:hover {
+      background: #F9FAFB;
+    }
+
+    .ranking-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      align-self: start;
+    }
+
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid #F3F4F6;
+    }
+
+    .ranking-item:last-child {
+      border-bottom: none;
+    }
+
+    .rank-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #6B7280;
+    }
+
+    .rank-info {
+      flex: 1;
+    }
+
+    .rank-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .rank-score {
+      font-size: 13px;
+      color: #6B7280;
+    }
+
+    .rank-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #6B7280;
+    }
+
+    .rank-badge.gold {
+      color: #F59E0B;
+    }
+
+    .rank-badge.silver {
+      color: #9CA3AF;
+    }
+
+    .rank-badge.bronze {
+      color: #D97706;
+    }
+
+    .practices-full-width {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 32px 32px 32px;
+    }
+
+    .practices-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .practices-table {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .practices-table thead {
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .practices-table th {
+      padding: 12px 8px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6B7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .practices-table th:nth-child(1) {
+      width: 12%;
+    }
+
+    .practices-table th:nth-child(2) {
+      width: 13%;
+    }
+
+    .practices-table th:nth-child(3) {
+      width: 30%;
+    }
+
+    .practices-table th:nth-child(4) {
+      width: 10%;
+    }
+
+    .practices-table th:nth-child(5) {
+      width: 25%;
+    }
+
+    .practices-table th:nth-child(6) {
+      width: 10%;
+    }
+
+    .practices-table td {
+      padding: 16px 8px;
+      border-bottom: 1px solid #F3F4F6;
+      font-size: 14px;
+      color: #374151;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .practices-table tbody tr:hover {
+      background: #F9FAFB;
+    }
+
+    .score-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .score-badge.high {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .score-badge.medium {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .score-badge.low {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .audio-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .play-btn,
+    .pause-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #DBEAFE;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .play-btn:hover,
+    .pause-btn:hover {
+      background: #BFDBFE;
+    }
+
+    .play-btn svg,
+    .pause-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: #1E40AF;
+    }
+
+    .pause-btn {
+      display: none;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      width: 90%;
+      max-width: 480px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      margin-bottom: 24px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .modal-footer button {
+      flex: 1;
+    }
+
+    @media (max-width: 1200px) {
+      .dashboard-content {
+        flex-direction: column;
+      }
+
+      .sidebar-content {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .auth-container {
+        padding: 32px 24px;
+      }
+
+      .dashboard-header {
+        padding: 16px 20px;
+      }
+
+      .dashboard-content {
+        padding: 20px;
+      }
+
+      .user-dropdown {
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="alertBox"></div>
+
+  <div id="loginSection" class="auth-container">
+    <div class="logo-section">
+      <img src="images/images.png" alt="Logo de PronouncePro" class="logo-img">
+      <div class="logo-text">PronouncePro</div>
+    </div>
+
+    <div class="welcome-section">
+      <h1 class="welcome-title">Welcome to<br>PronouncePro</h1>
+      <p class="welcome-subtitle">Log in to your teacher dashboard.</p>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label" for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email address" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="loginPassword">Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required />
+          <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="forgot-password">
+        <a href="#">Forgot your password?</a>
+      </div>
+
+      <button type="submit" class="btn-primary">Log In</button>
+    </form>
+
+    <div class="footer-link">
+      Don't have an account? <a href="#" onclick="showSignup(); return false;">Sign up</a>
+    </div>
+  </div>
+
+  <div id="signupSection" class="auth-container hidden">
+    <div class="logo-section">
+      <img src="images/images.png" alt="Logo de PronouncePro" class="logo-img">
+      <div class="logo-text">PronouncePro</div>
+    </div>
+
+    <div class="welcome-section">
+      <h1 class="welcome-title">Crea tu cuenta de docente</h1>
+      <p class="welcome-subtitle">Únete a nuestra comunidad y ayuda a tus estudiantes.</p>
+    </div>
+
+    <form id="signupForm">
+      <div class="form-group">
+        <label class="form-label" for="registerNombre">Nombre Completo</label>
+        <input type="text" id="registerNombre" class="form-input" placeholder="Introduce tu nombre completo" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="registerEmail">Correo Electrónico</label>
+        <input type="email" id="registerEmail" class="form-input" placeholder="tu.correo@ejemplo.com" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="registerPassword">Contraseña</label>
+        <div class="input-wrapper">
+          <input type="password" id="registerPassword" class="form-input" placeholder="Crea una contraseña segura"
+            required />
+          <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">Registrarse</button>
+    </form>
+
+    <div class="footer-link">
+      ¿Ya tienes una cuenta? <a href="#" onclick="showLogin(); return false;">Inicio sesión</a>
+    </div>
+  </div>
+
+  <div id="panelSection">
+    <header class="dashboard-header">
+      <div class="dashboard-logo">
+        <img src="images/images.png" alt="Logo de PronouncePro" class="logo-img">
+        <span class="dashboard-logo-text">Panel Docente – PronouncePro</span>
+      </div>
+      <div class="dashboard-user">
+        <div class="notification-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+          </svg>
+        </div>
+        <div class="user-avatar" onclick="toggleUserDropdown()" id="headerUserAvatar">?</div>
+      </div>
+    </header>
+
+
+
+    <div class="user-dropdown" id="userDropdown">
+      <div class="dropdown-header">
+        <div style="font-weight: 600; color: #1a1a1a;" id="userDisplayName">Docente</div>
+        <div class="dropdown-email" id="userDisplayEmail">email@ejemplo.com</div>
+      </div>
+      <div class="dropdown-item" onclick="openEditProfileModal()">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+        </svg>
+        Editar perfil
+      </div>
+      <div class="dropdown-item danger" onclick="logout()">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
+        </svg>
+        Cerrar sesión
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <div class="main-content">
+        <div class="students-card">
+          <div class="card-header">
+            <h3 class="card-title">Lista de Estudiantes</h3>
+          </div>
+
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24">
+              <path
+                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <input type="text" id="inputBuscar" placeholder="Buscar por correo..." />
+          </div>
+
+          <div id="tablaUsuarios">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody id="usuariosBody">
+                <tr>
+                  <td colspan="2" style="text-align:center;color:#9CA3AF;padding:32px;">Cargando estudiantes...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-content">
+        <div class="ranking-card" id="tablaTop5">
+          <div class="card-header">
+            <h3 class="card-title">Ranking: Top 5</h3>
+          </div>
+
+          <div id="top5Body">
+            <div style="text-align:center;color:#9CA3AF;padding:32px;">Cargando ranking...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="practices-full-width">
+      <div class="practices-card" id="tablaPracticas" style="display:none;">
+        <div class="card-header">
+          <h3 class="card-title">Historial de Prácticas Recientes</h3>
+        </div>
+
+        <table class="practices-table">
+          <thead>
+            <tr>
+              <th>Usuario (Email)</th>
+              <th>Tema de la clase</th>
+              <th>Frase</th>
+              <th>Puntaje</th>
+              <th>Feedback</th>
+              <th>Audio</th>
+            </tr>
+          </thead>
+          <tbody id="practicasBody">
+            <tr>
+              <td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">No hay prácticas disponibles</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="editProfileModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Editar Perfil</h2>
+      </div>
+
+      <form id="editProfileForm">
+        <div class="form-group">
+          <label class="form-label" for="editUsername">Nombre de Usuario</label>
+          <input type="text" id="editUsername" class="form-input" placeholder="Ingrese su nombre de usuario" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="editEmail">Correo Electrónico</label>
+          <input type="email" id="editEmail" class="form-input" disabled
+            style="background: #F3F4F6; cursor: not-allowed;" />
+          <small style="color: #6B7280; font-size: 12px; margin-top: 4px; display: block;">
+            El correo electrónico no puede ser modificado
+          </small>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeEditProfileModal()">Cancelar</button>
+          <button type="submit" class="btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://internal-iii-either-blank.trycloudflare.com";
+
+    let currentUserEmail = "";
+    let currentUserName = "";
+    let allPractices = [];
+    let currentAudio = null;
+    let currentAudioIndex = null;
+
+    async function postData(endpoint, data) {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error(await response.text());
+      return await response.json();
+    }
+
+    async function putData(endpoint, data) {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error(await response.text());
+      return await response.json();
+    }
+
+    async function getData(endpoint) {
+      const response = await fetch(`${API_URL}${endpoint}`);
+      if (!response.ok) throw new Error("Error al obtener datos");
+      return await response.json();
+    }
+
+    function showAlert(message, type = "info") {
+      const alertBox = document.getElementById("alertBox");
+      alertBox.innerHTML = `<div class="alert ${type}" style="position:fixed;top:20px;right:20px;z-index:1000;min-width:300px;">${message}</div>`;
+      setTimeout(() => alertBox.innerHTML = "", 4000);
+    }
+
+    function saveSession(role, email) {
+      localStorage.setItem("role", role);
+      localStorage.setItem("email", email);
+    }
+
+    function getSession() {
+      return {
+        role: localStorage.getItem("role"),
+        email: localStorage.getItem("email"),
+      };
+    }
+
+    function logout() {
+      localStorage.clear();
+      closeUserDropdown();
+      window.location.reload();
+    }
+
+    function showSignup() {
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("signupSection").classList.remove("hidden");
+    }
+
+    function showLogin() {
+      document.getElementById("signupSection").classList.add("hidden");
+      document.getElementById("loginSection").classList.remove("hidden");
+    }
+
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function toggleUserDropdown() {
+      const dropdown = document.getElementById("userDropdown");
+      dropdown.classList.toggle("active");
+    }
+
+    function closeUserDropdown() {
+      const dropdown = document.getElementById("userDropdown");
+      dropdown.classList.remove("active");
+    }
+
+    function getInitials(name) {
+      if (!name) return "?";
+      const parts = name.trim().split(" ");
+      if (parts.length >= 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+      return name[0].toUpperCase();
+    }
+
+    function updateUserAvatar(name) {
+      const avatar = document.getElementById("headerUserAvatar");
+      const initials = getInitials(name);
+      avatar.textContent = initials;
+    }
+
+    function openEditProfileModal() {
+      closeUserDropdown();
+      const session = getSession();
+
+      getData(`/docentes/email/${encodeURIComponent(session.email)}`)
+        .then(data => {
+          document.getElementById("editUsername").value = data.username || "";
+          document.getElementById("editEmail").value = data.email || session.email;
+        })
+        .catch(err => {
+          console.error("Error al cargar datos del docente:", err);
+          document.getElementById("editEmail").value = session.email;
+        });
+
+      document.getElementById("editProfileModal").classList.add("active");
+    }
+
+    function closeEditProfileModal() {
+      document.getElementById("editProfileModal").classList.remove("active");
+    }
+
+    document.addEventListener("click", (e) => {
+      const dropdown = document.getElementById("userDropdown");
+      const avatar = document.querySelector(".user-avatar");
+
+      if (dropdown.classList.contains("active") &&
+        !dropdown.contains(e.target) &&
+        !avatar.contains(e.target)) {
+        closeUserDropdown();
+      }
+    });
+
+    document.getElementById("editProfileModal").addEventListener("click", (e) => {
+      if (e.target.id === "editProfileModal") {
+        closeEditProfileModal();
+      }
+    });
+
+    document.getElementById("loginForm").onsubmit = async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
+      try {
+        await postData("/docentes/login", { email, password });
+        showAlert("Login exitoso ✅", "success");
+        saveSession("docente", email);
+        currentUserEmail = email;
+
+        document.getElementById("userDisplayEmail").textContent = email;
+
+        getData(`/docentes/email/${encodeURIComponent(email)}`)
+          .then(data => {
+            const username = data.username || "Docente";
+            currentUserName = username;
+            document.getElementById("userDisplayName").textContent = username;
+            updateUserAvatar(username);
+          })
+          .catch(() => {
+            document.getElementById("userDisplayName").textContent = "Docente";
+            updateUserAvatar("Docente");
+          });
+
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("panelSection").classList.add("active");
+        cargarDatosIniciales();
+      } catch (err) {
+        showAlert("Error al iniciar sesión", "error");
+      }
+    };
+
+    document.getElementById("signupForm").onsubmit = async (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("registerNombre").value.trim();
+      const email = document.getElementById("registerEmail").value.trim();
+      const password = document.getElementById("registerPassword").value.trim();
+
+      try {
+        await postData("/docentes/registro", { username: nombre, email, password });
+        showAlert("Docente registrado ✅", "success");
+        setTimeout(() => showLogin(), 1500);
+      } catch (err) {
+        showAlert("Error al registrar docente", "error");
+      }
+    };
+
+    async function actualizarUsernameDocente(newUsername) {
+      const session = getSession();
+      if (!session.email) {
+        throw new Error("No hay sesión activa");
+      }
+
+      return await putData(`/docentes/${encodeURIComponent(session.email)}/perfil`, {
+        username: newUsername
+      });
+    }
+
+    document.getElementById("editProfileForm").onsubmit = async (e) => {
+      e.preventDefault();
+      const newUsername = document.getElementById("editUsername").value.trim();
+
+      if (!newUsername) {
+        showAlert("El nombre de usuario no puede estar vacío", "error");
+        return;
+      }
+
+      try {
+        const updatedDocente = await actualizarUsernameDocente(newUsername);
+
+        showAlert("✅ Perfil actualizado exitosamente", "success");
+
+        // Actualizar la UI con el nuevo username
+        currentUserName = updatedDocente.username;
+        document.getElementById("userDisplayName").textContent = updatedDocente.username;
+        updateUserAvatar(updatedDocente.username);
+
+        setTimeout(() => closeEditProfileModal(), 500);
+      } catch (err) {
+        console.error("Error al actualizar perfil:", err);
+        showAlert("❌ Error al actualizar perfil: " + (err.message || "Intente nuevamente"), "error");
+      }
+    };
+
+    window.onload = () => {
+      const session = getSession();
+      if (session.role === "docente" && session.email) {
+        currentUserEmail = session.email;
+        document.getElementById("userDisplayEmail").textContent = session.email;
+
+        getData(`/docentes/email/${encodeURIComponent(session.email)}`)
+          .then(data => {
+            const username = data.username || "Docente";
+            currentUserName = username;
+            document.getElementById("userDisplayName").textContent = username;
+            updateUserAvatar(username);
+          })
+          .catch(() => {
+            document.getElementById("userDisplayName").textContent = "Docente";
+            updateUserAvatar("Docente");
+          });
+
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("panelSection").classList.add("active");
+        cargarDatosIniciales();
+      }
+    };
+
+    const docenteId = 1;
+
+    async function cargarDatosIniciales() {
+      await cargarEstudiantes();
+      await cargarTop5();
+    }
+
+    async function cargarEstudiantes() {
+      try {
+        const data = await getData(`/docentes/${docenteId}/estudiantes`);
+        const usuariosBody = document.getElementById("usuariosBody");
+        usuariosBody.innerHTML = "";
+
+        if (!Array.isArray(data) || data.length === 0) {
+          usuariosBody.innerHTML = `<tr><td colspan="2" style="text-align:center;color:#9CA3AF;padding:32px;">No hay estudiantes registrados</td></tr>`;
+        } else {
+          data.forEach(u => {
+            usuariosBody.innerHTML += `<tr><td>${u.username || ""}</td><td>${u.email || ""}</td></tr>`;
+          });
+        }
+      } catch (err) {
+        console.error("Error al cargar estudiantes:", err);
+      }
+    }
+
+    async function cargarTop5() {
+      try {
+        const data = await getData(`/docentes/${docenteId}/top-5-estudiantes`);
+        const top5Body = document.getElementById("top5Body");
+        top5Body.innerHTML = "";
+
+        if (!Array.isArray(data) || data.length === 0) {
+          top5Body.innerHTML = `<div style="text-align:center;color:#9CA3AF;padding:32px;">No hay datos disponibles</div>`;
+        } else {
+          const medals = ['🥇', '🥈', '🥉', '#4', '#5'];
+          const badgeClasses = ['gold', 'silver', 'bronze', '', ''];
+
+          data.forEach((u, i) => {
+            const initials = getInitials(u.username);
+
+            top5Body.innerHTML += `
+              <div class="ranking-item">
+                <div class="rank-avatar">${initials}</div>
+                <div class="rank-info">
+                  <div class="rank-name">${u.username || ""}</div>
+                  <div class="rank-score">${u.puntaje_promedio !== undefined ? u.puntaje_promedio.toFixed(0) + "%" : "0%"} Promedio</div>
+                </div>
+                <div class="rank-badge ${badgeClasses[i]}">
+                  <span style="font-size:20px;">${medals[i]}</span>
+                </div>
+              </div>`;
+          });
+        }
+      } catch (err) {
+        console.error("Error al cargar Top 5:", err);
+      }
+    }
+
+    async function cargarPracticas() {
+      try {
+        showAlert("Cargando prácticas, espere...", "info");
+        const usuarios = await getData("/usuarios");
+        const practicasBody = document.getElementById("practicasBody");
+        practicasBody.innerHTML = "";
+
+        if (!Array.isArray(usuarios) || usuarios.length === 0) {
+          practicasBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">No hay prácticas disponibles</td></tr>`;
+          document.getElementById("tablaPracticas").style.display = "block";
+          return;
+        }
+
+        const historialPromises = usuarios.map(u =>
+          getData(`/usuarios/${encodeURIComponent(u.email)}/historial`)
+            .then(hist => ({ email: u.email, hist }))
+            .catch(() => ({ email: u.email, hist: [] }))
+        );
+
+        const resultados = await Promise.all(historialPromises);
+        allPractices = [];
+
+        resultados.forEach(block => {
+          block.hist.forEach(entry => {
+            allPractices.push({
+              email: block.email,
+              tema: entry.tema || "",
+              frase: entry.frase || "",
+              puntaje: entry.puntaje !== undefined ? entry.puntaje : 0,
+              feedback: entry.feedback || "",
+              audio_url: entry.audio_url || ""
+            });
+          });
+        });
+
+        renderPractices(allPractices);
+
+        const tablaPracticas = document.getElementById("tablaPracticas");
+        tablaPracticas.style.display = "block";
+        showAlert("Prácticas cargadas ✅", "success");
+      } catch (err) {
+        showAlert("Error al cargar prácticas", "error");
+      }
+    }
+
+    function renderPractices(practices) {
+      const practicasBody = document.getElementById("practicasBody");
+      practicasBody.innerHTML = "";
+
+      if (practices.length === 0) {
+        practicasBody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#9CA3AF;padding:32px;">No se encontraron prácticas</td></tr>`;
+        return;
+      }
+
+      practices.forEach((practice, index) => {
+        const puntaje = practice.puntaje;
+        let scoreClass = 'low';
+        if (puntaje >= 90) scoreClass = 'high';
+        else if (puntaje >= 70) scoreClass = 'medium';
+
+        const audioBtn = practice.audio_url
+          ? `<div class="audio-controls">
+               <button class="play-btn" id="play-${index}" onclick="playAudio('${API_URL}${practice.audio_url}', ${index})">
+                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+               </button>
+               <button class="pause-btn" id="pause-${index}" onclick="pauseAudio(${index})">
+                 <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+               </button>
+             </div>`
+          : "—";
+
+        practicasBody.innerHTML += `<tr>
+          <td>${practice.email}</td>
+          <td>${practice.tema}</td>
+          <td title="${practice.frase}">${practice.frase}</td>
+          <td><span class="score-badge ${scoreClass}">${puntaje}%</span></td>
+          <td title="${practice.feedback}">${practice.feedback}</td>
+          <td>${audioBtn}</td>
+        </tr>`;
+      });
+    }
+
+    document.getElementById("inputBuscar").addEventListener("keyup", async (e) => {
+      const query = e.target.value.trim().toLowerCase();
+
+      if (!query) {
+        await cargarEstudiantes();
+        renderPractices(allPractices);
+        return;
+      }
+
+      try {
+        const estudiantes = await getData(`/docentes/${docenteId}/buscar-estudiante?query=${encodeURIComponent(query)}`);
+        const usuariosBody = document.getElementById("usuariosBody");
+        usuariosBody.innerHTML = "";
+
+        if (!Array.isArray(estudiantes) || estudiantes.length === 0) {
+          usuariosBody.innerHTML = `<tr><td colspan="2" style="text-align:center;color:#9CA3AF;padding:32px;">No se encontraron resultados</td></tr>`;
+        } else {
+          estudiantes.forEach(u => {
+            usuariosBody.innerHTML += `<tr><td>${u.username || ""}</td><td>${u.email || ""}</td></tr>`;
+          });
+        }
+
+        const filteredPractices = allPractices.filter(practice => {
+          return practice.email.toLowerCase().includes(query);
+        });
+
+        renderPractices(filteredPractices);
+
+      } catch (err) {
+        console.error("Error al buscar:", err);
+      }
+    });
+
+    function playAudio(url, index) {
+      if (currentAudio && currentAudioIndex !== null) {
+        currentAudio.pause();
+        document.getElementById(`play-${currentAudioIndex}`).style.display = 'flex';
+        document.getElementById(`pause-${currentAudioIndex}`).style.display = 'none';
+      }
+
+      currentAudio = new Audio(url);
+      currentAudioIndex = index;
+
+      currentAudio.play().catch(err => {
+        showAlert("Error al reproducir audio", "error");
+        console.error("Error:", err);
+      });
+
+      document.getElementById(`play-${index}`).style.display = 'none';
+      document.getElementById(`pause-${index}`).style.display = 'flex';
+
+      currentAudio.onended = () => {
+        document.getElementById(`play-${index}`).style.display = 'flex';
+        document.getElementById(`pause-${index}`).style.display = 'none';
+        currentAudio = null;
+        currentAudioIndex = null;
+      };
+    }
+
+    function pauseAudio(index) {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+        currentAudioIndex = null;
+      }
+
+      document.getElementById(`play-${index}`).style.display = 'flex';
+      document.getElementById(`pause-${index}`).style.display = 'none';
+    }
+
+    setTimeout(() => {
+      cargarPracticas();
+    }, 2000);
+  </script>
+</body>
+
+</html>

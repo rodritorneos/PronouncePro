@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estudiante - Pronunciation App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+      background: #F5F7FA;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Auth Section Styles */
+    .auth-container {
+      background: white;
+      border-radius: 24px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 12px;
+      color: #2196F3;
+    }
+
+    .logo-text {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2c2c2c;
+      letter-spacing: -0.5px;
+    }
+
+    .dashboard-logo {
+      display: flex;
+      align-items: center;
+      /* 🔥 centra verticalmente el texto con el logo */
+      justify-content: center;
+      /* opcional: centra horizontalmente dentro del sidebar */
+      gap: 10px;
+      /* espacio entre logo y texto */
+      padding: 1rem 0;
+      /* espacio vertical */
+    }
+
+    .logo-img {
+      width: 45px;
+      /* ajusta según el tamaño deseado */
+      height: auto;
+      object-fit: contain;
+    }
+
+    .dashboard-logo-text {
+      font-size: 1.0rem;
+      font-weight: 700;
+      color: #000000;
+      /* o el color que uses en el sidebar */
+    }
+
+
+    .auth-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2c2c2c;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .auth-subtitle {
+      font-size: 15px;
+      color: #757575;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2c2c2c;
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 15px;
+      color: #2c2c2c;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .form-input::placeholder {
+      color: #9e9e9e;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2196F3;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #757575;
+      padding: 4px;
+    }
+
+    .password-toggle:hover {
+      color: #2196F3;
+    }
+
+    .helper-text {
+      font-size: 12px;
+      color: #757575;
+      margin-top: 6px;
+    }
+
+    .forgot-password {
+      text-align: right;
+      margin-bottom: 24px;
+    }
+
+    .forgot-password a {
+      font-size: 14px;
+      color: #2196F3;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 16px;
+      background: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #1976D2;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .toggle-auth {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #757575;
+    }
+
+    .toggle-auth a {
+      color: #2196F3;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    .toggle-auth a:hover {
+      text-decoration: underline;
+    }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .alert.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+
+    .alert.error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
+
+    .alert.info {
+      background: #e3f2fd;
+      color: #1565c0;
+      border: 1px solid #bbdefb;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Practice Section - Exact Figma Design */
+    #practiceSection {
+      display: flex;
+      width: 100%;
+      max-width: 1400px;
+      min-height: 100vh;
+      background: #E8EAED;
+      margin: 0;
+      padding: 0;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: white;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 8px;
+      margin-bottom: 32px;
+    }
+
+    .sidebar-logo {
+      width: 28px;
+      height: 28px;
+      color: #2196F3;
+    }
+
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1F2937;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #F9FAFB;
+      border-radius: 12px;
+      margin-bottom: 32px;
+    }
+
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1F2937;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-email {
+      font-size: 12px;
+      color: #6B7280;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-menu {
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 12px;
+      margin-bottom: 4px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #6B7280;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .nav-item:hover {
+      background: #F3F4F6;
+      color: #1F2937;
+    }
+
+    .nav-item.active {
+      background: #E3F2FD;
+      color: #1976D2;
+    }
+
+    .nav-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 12px;
+      margin-top: auto;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #6B7280;
+      font-size: 15px;
+      font-weight: 500;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .btn-logout:hover {
+      background: #FEE2E2;
+      color: #DC2626;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      background: #F5F7FA;
+    }
+
+    .content-header {
+      padding: 40px 48px 32px 48px;
+      background: white;
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: #6B7280;
+    }
+
+    .content-body {
+      padding: 32px 48px;
+    }
+
+    /* Practice Form */
+    .practice-form {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .topic-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .topic-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #1F2937;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .topic-select:focus {
+      outline: none;
+      border-color: #2196F3;
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
+
+    .btn-generate {
+      padding: 12px 24px;
+      background: #E5E7EB;
+      color: #374151;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-generate:hover {
+      background: #D1D5DB;
+    }
+
+    /* Practice Card */
+    .practice-card {
+      background: white;
+      border-radius: 16px;
+      padding: 48px 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .practice-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9CA3AF;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    .practice-phrase {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1F2937;
+      margin-bottom: 48px;
+      line-height: 1.5;
+      min-height: 36px;
+    }
+
+    .record-button {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #2196F3;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    .record-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+    }
+
+    .record-button:active {
+      transform: scale(0.98);
+    }
+
+    .record-button.recording {
+      background: #DC2626;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    .record-icon {
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+
+    .record-hint {
+      font-size: 14px;
+      color: #9CA3AF;
+      margin-bottom: 24px;
+    }
+
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn-analyze {
+      padding: 12px 24px;
+      background: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-analyze:hover {
+      background: #1976D2;
+    }
+
+    .btn-analyze:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Results Section */
+    .results-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 24px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 20px;
+    }
+
+    .feedback-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .feedback-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 24px;
+    }
+
+    .attempt-section {
+      margin-bottom: 24px;
+    }
+
+    .attempt-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9CA3AF;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .attempt-text {
+      font-size: 15px;
+      color: #1F2937;
+      line-height: 1.6;
+    }
+
+    .word-highlight {
+      background: #FEF3C7;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .suggestion-section {
+      padding-top: 24px;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    .suggestion-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9CA3AF;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .suggestion-text {
+      font-size: 15px;
+      color: #1F2937;
+      line-height: 1.6;
+    }
+
+    .score-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .score-circle-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin-bottom: 20px;
+    }
+
+    .score-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: conic-gradient(#4ECCA3 0% var(--score), #E5E7EB var(--score) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .score-inner {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-value {
+      font-size: 48px;
+      font-weight: 700;
+      color: #1F2937;
+      line-height: 1;
+    }
+
+    .score-label {
+      font-size: 14px;
+      color: #6B7280;
+      margin-top: 4px;
+    }
+
+    .level-badge {
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      background: #DBEAFE;
+      color: #1E40AF;
+      margin-top: 8px;
+    }
+
+    /* Profile Tab */
+    .profile-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 600px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Stats Tab */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #6B7280;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .stat-value {
+      font-size: 40px;
+      font-weight: 700;
+      color: #1F2937;
+    }
+
+    .stat-unit {
+      font-size: 24px;
+      color: #6B7280;
+      font-weight: 600;
+    }
+
+    /* History Tab */
+    .history-list {
+      list-style: none;
+    }
+
+    .history-item {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .history-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .history-phrase {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1F2937;
+      margin-bottom: 8px;
+    }
+
+    .history-meta {
+      font-size: 13px;
+      color: #6B7280;
+      line-height: 1.6;
+    }
+
+    .history-score {
+      font-size: 32px;
+      font-weight: 700;
+      color: #4ECCA3;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 1024px) {
+      #practiceSection {
+        flex-direction: column;
+        min-height: auto;
+      }
+
+      .sidebar {
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .content-header,
+      .content-body {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .practice-card {
+        padding: 32px 20px;
+      }
+
+      .practice-phrase {
+        font-size: 20px;
+      }
+
+      .page-title {
+        font-size: 28px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="alertBox"></div>
+
+  <!-- AUTH SECTION -->
+  <div id="authSection" class="auth-container">
+    <!-- LOGIN VIEW -->
+    <div id="loginView">
+      <!-- <div class="logo-section">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7v10c0 5.5 3.8 9.5 10 11 6.2-1.5 10-5.5 10-11V7z"></path>
+        </svg>
+        <div class="logo-text">PronouncePro</div>
+      </div> -->
+      <div class="logo-section">
+        <img src="images/images.png" alt="Logo de PronouncePro" class="logo-img">
+        <div class="logo-text">PronouncePro</div>
+      </div>
+
+
+
+      <h2 class="auth-title">Acceso Estudiantes</h2>
+      <p class="auth-subtitle">¡Hola! Ingresa tus datos para continuar.</p>
+
+      <form id="loginForm" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Correo Electrónico</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="tu.correo@ejemplo.com" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Contraseña</label>
+          <div class="input-wrapper">
+            <input type="password" id="loginPassword" class="form-input" placeholder="Ingresa tu contraseña" required />
+            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="forgot-password">
+          <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnLogin">Iniciar Sesión</button>
+      </form>
+
+      <div class="toggle-auth">
+        ¿No tienes cuenta? <a href="#" onclick="showSignup()">Regístrate</a>
+      </div>
+    </div>
+
+    <!-- SIGNUP VIEW -->
+    <div id="signupView" class="hidden">
+      <!-- <div class="logo-section">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7v10c0 5.5 3.8 9.5 10 11 6.2-1.5 10-5.5 10-11V7z"></path>
+        </svg>
+        <div class="logo-text">PronouncePro</div>
+      </div> -->
+      <div class="logo-section">
+        <img src="images/images.png" alt="Logo de PronouncePro" class="logo-img">
+        <div class="logo-text">PronouncePro</div>
+      </div>
+
+      <h2 class="auth-title">Crea tu cuenta de estudiante</h2>
+      <p class="auth-subtitle">Comienza a perfeccionar tu pronunciación en inglés hoy mismo.</p>
+
+      <form id="signupForm" onsubmit="return false;">
+        <div class="form-group">
+          <label class="form-label" for="registerUsername">Nombre completo</label>
+          <input type="text" id="registerUsername" class="form-input" placeholder="Introduce tu nombre completo"
+            required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="registerEmail">Correo electrónico</label>
+          <input type="email" id="registerEmail" class="form-input" placeholder="tu@correo.com" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="registerPassword">Contraseña</label>
+          <div class="input-wrapper">
+            <input type="password" id="registerPassword" class="form-input" placeholder="Crea una contraseña segura"
+              required />
+            <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+          <div class="helper-text">Mínimo 8 caracteres.</div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnRegister">Registrarse</button>
+      </form>
+
+      <div class="toggle-auth">
+        ¿Ya tienes una cuenta? <a href="#" onclick="showLogin()">Inicia sesión</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE SECTION -->
+  <section id="practiceSection" style="display:none;">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <!-- <div class="sidebar-header">
+        <svg class="sidebar-logo" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7v10c0 5.5 3.8 9.5 10 11 6.2-1.5 10-5.5 10-11V7z"></path>
+        </svg>
+        <div class="sidebar-title">PronounceProaaa</div>
+      </div> -->
+
+      <div class="dashboard-logo">
+        <img src="images/images.png" alt="Logo de PronouncePro" class="logo-img">
+        <span class="dashboard-logo-text">PronouncePro</span>
+      </div>
+
+
+      <div class="user-profile">
+        <div class="user-avatar" id="userAvatar">AR</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">Alex Rivera</div>
+          <div class="user-email" id="userEmail">alex.r@email.com</div>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <div class="nav-item active" data-target="practiceTab">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span>Practice</span>
+        </div>
+
+        <div class="nav-item" data-target="statsTab">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <span>Statistics</span>
+        </div>
+
+        <div class="nav-item" data-target="historyTab">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>History</span>
+        </div>
+
+        <div class="nav-item" data-target="profileTab">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Profile</span>
+        </div>
+      </nav>
+
+      <button class="btn-logout" onclick="logout()">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span>Log Out</span>
+      </button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- PRACTICE TAB -->
+      <div id="practiceTab" class="tab-content" style="display:block;">
+        <div class="content-header">
+          <h1 class="page-title">Practice Your Pronunciation</h1>
+          <p class="page-subtitle">Select a topic, record yourself saying the phrase, and get instant feedback.</p>
+        </div>
+
+        <div class="content-body">
+          <!-- Topic Selection Form -->
+          <div class="practice-form">
+            <div class="form-row">
+              <div class="topic-group">
+                <label for="temaSelect">Selecciona un tema</label>
+                <select id="temaSelect" class="topic-select">
+                  <option value="Verb to be">Verb To Be</option>
+                  <option value="Present Simple">Present Simple</option>
+                  <option value="The verb can">The Verb Can</option>
+                  <option value="Future Perfect">Future Perfect</option>
+                </select>
+              </div>
+              <button class="btn-generate" id="btnGenerar">Generar oración</button>
+            </div>
+          </div>
+
+          <!-- Practice Card -->
+          <div class="practice-card">
+            <div class="practice-label">FRASE PARA PRACTICAR</div>
+            <div class="practice-phrase" id="fraseGenerada">Haz clic en "Generar oración" para comenzar</div>
+
+            <button class="record-button" id="btnGrabar">
+              <svg class="record-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2"></line>
+                <line x1="8" y1="23" x2="16" y2="23" stroke="white" stroke-width="2"></line>
+              </svg>
+            </button>
+
+            <div class="record-hint" id="recordHint">Presiona el botón para comenzar a grabar.</div>
+
+            <div class="audio-controls" id="audioControls" style="display:none;">
+              <audio id="audioPreview" controls style="width: 100%; max-width: 400px;"></audio>
+              <button class="btn-analyze" id="btnEnviar" disabled>Enviar para análisis</button>
+            </div>
+          </div>
+
+          <!-- RESULTS SECTION -->
+          <div id="resultadoSection" style="display:none;">
+            <h2 class="results-title">Your Results</h2>
+            <div class="results-grid">
+              <div class="feedback-card">
+                <h3 class="feedback-title">Feedback</h3>
+
+                <div class="attempt-section">
+                  <div class="attempt-label">YOUR ATTEMPT</div>
+                  <div class="attempt-text" id="transcripcion">
+                    Esperando análisis...
+                  </div>
+                </div>
+
+                <div class="suggestion-section">
+                  <div class="suggestion-label">SUGGESTION</div>
+                  <div class="suggestion-text" id="feedback">
+                    El feedback aparecerá aquí después del análisis.
+                  </div>
+                </div>
+
+                <audio id="audioFinal" controls style="margin-top: 20px; width: 100%; display:none;"></audio>
+              </div>
+
+              <div class="score-card">
+                <div class="score-circle-container">
+                  <div class="score-circle" id="scoreCircle" style="--score: 0%;">
+                    <div class="score-inner">
+                      <div class="score-value" id="puntaje">0</div>
+                      <div class="score-label">Score</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="level-badge" id="nivel">Level: -</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATISTICS TAB -->
+      <div id="statsTab" class="tab-content" style="display:none;">
+        <div class="content-header">
+          <h1 class="page-title">My Statistics</h1>
+          <p class="page-subtitle">Track your progress and improvement over time.</p>
+        </div>
+
+        <div class="content-body">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Average Score</div>
+              <div class="stat-value" id="avgScore">0<span class="stat-unit">%</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Best Score</div>
+              <div class="stat-value" id="bestScore">0<span class="stat-unit">%</span></div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Worst Score</div>
+              <div class="stat-value" id="worstScore">0<span class="stat-unit">%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY TAB -->
+      <div id="historyTab" class="tab-content" style="display:none;">
+        <div class="content-header">
+          <h1 class="page-title">Practice History</h1>
+          <p class="page-subtitle">Review your previous pronunciation attempts.</p>
+        </div>
+
+        <div class="content-body">
+          <ul class="history-list" id="historyList">
+            <li style="text-align: center; padding: 40px; color: #9CA3AF;">No hay historial todavía</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div id="profileTab" class="tab-content" style="display:none;">
+        <div class="content-header">
+          <h1 class="page-title">My Profile</h1>
+          <p class="page-subtitle">Manage your account information.</p>
+        </div>
+
+        <div class="content-body">
+          <div class="profile-card">
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" id="profileEmail" disabled />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-input" id="profileUsername" />
+            </div>
+
+            <button class="btn-primary" id="btnUpdateProfile">Update Profile</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <script>
+    const API_URL = "https://internal-iii-either-blank.trycloudflare.com";
+
+    // Helper functions
+    async function postData(endpoint, data) {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Error en la solicitud");
+      return await response.json();
+    }
+
+    async function putData(endpoint, data) {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Error en la solicitud PUT");
+      return await response.json();
+    }
+
+    async function postFile(endpoint, formData) {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) throw new Error("Error al enviar archivo");
+      return await response.json();
+    }
+
+    async function getData(endpoint) {
+      const response = await fetch(`${API_URL}${endpoint}`);
+      if (!response.ok) throw new Error("Error al obtener datos");
+      return await response.json();
+    }
+
+    function showAlert(message, type = "info") {
+      const alertBox = document.getElementById("alertBox");
+      alertBox.innerHTML = `<div class="alert ${type}">${message}</div>`;
+      alertBox.style.position = "fixed";
+      alertBox.style.top = "20px";
+      alertBox.style.left = "50%";
+      alertBox.style.transform = "translateX(-50%)";
+      alertBox.style.zIndex = "9999";
+      setTimeout(() => { alertBox.innerHTML = ""; }, 4000);
+    }
+
+    function saveSession(role, email) {
+      sessionStorage.setItem("role", role);
+      sessionStorage.setItem("email", email);
+    }
+
+    function getSession() {
+      return {
+        role: sessionStorage.getItem("role"),
+        email: sessionStorage.getItem("email"),
+      };
+    }
+
+    function logout() {
+      sessionStorage.clear();
+      location.reload();
+    }
+
+    function showSignup() {
+      document.getElementById("loginView").classList.add("hidden");
+      document.getElementById("signupView").classList.remove("hidden");
+    }
+
+    function showLogin() {
+      document.getElementById("signupView").classList.add("hidden");
+      document.getElementById("loginView").classList.remove("hidden");
+    }
+
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    // Navigation
+    const navItems = document.querySelectorAll(".nav-item");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    navItems.forEach(item => {
+      item.addEventListener("click", () => {
+        navItems.forEach(nav => nav.classList.remove("active"));
+        item.classList.add("active");
+
+        const target = item.dataset.target;
+        tabContents.forEach(tab => tab.style.display = "none");
+        document.getElementById(target).style.display = "block";
+      });
+    });
+
+    // Login
+    document.getElementById("btnLogin").onclick = async () => {
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      if (!email || !password) return showAlert("Completa todos los campos", "error");
+
+      try {
+        await postData("/usuarios/login", { email, password });
+        showAlert("Login exitoso ✅", "success");
+        saveSession("usuario", email);
+
+        document.getElementById("authSection").style.display = "none";
+        document.getElementById("practiceSection").style.display = "flex";
+        document.body.style.padding = "0";
+
+        await cargarPerfilYEstadisticas(email);
+      } catch {
+        showAlert("Error al iniciar sesión", "error");
+      }
+    };
+
+    // Register
+    document.getElementById("btnRegister").onclick = async () => {
+      const username = document.getElementById("registerUsername").value.trim();
+      const email = document.getElementById("registerEmail").value.trim();
+      const password = document.getElementById("registerPassword").value.trim();
+      if (!username || !email || !password) return showAlert("Completa todos los campos", "error");
+
+      try {
+        await postData("/usuarios/registro", { username, email, password });
+        showAlert("Usuario registrado ✅", "success");
+        setTimeout(showLogin, 1500);
+      } catch {
+        showAlert("Error al registrar usuario", "error");
+      }
+    };
+
+    // Load profile and stats
+    async function cargarPerfilYEstadisticas(email) {
+      try {
+        const profile = await getData(`/usuarios/${email}`);
+        document.getElementById("profileEmail").value = profile.email;
+        document.getElementById("profileUsername").value = profile.username;
+        document.getElementById("userEmail").textContent = profile.email;
+        document.getElementById("userName").textContent = profile.username;
+
+        const initials = profile.username.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        document.getElementById("userAvatar").textContent = initials;
+
+        const stats = await getData(`/usuarios/${email}/estadisticas`);
+        document.getElementById("avgScore").innerHTML = `${stats.promedio?.toFixed(0) || 0}<span class="stat-unit">%</span>`;
+        document.getElementById("bestScore").innerHTML = `${stats.mejor_puntaje?.toFixed(0) || 0}<span class="stat-unit">%</span>`;
+        document.getElementById("worstScore").innerHTML = `${stats.peor_puntaje?.toFixed(0) || 0}<span class="stat-unit">%</span>`;
+
+        const historial = await getData(`/usuarios/${email}/historial`);
+        const historyList = document.getElementById("historyList");
+        historyList.innerHTML = "";
+
+        if (historial.length === 0) {
+          historyList.innerHTML = '<li style="text-align: center; padding: 40px; color: #9CA3AF;">No hay historial todavía</li>';
+        } else {
+          historial.forEach(item => {
+            const li = document.createElement("li");
+            li.className = "history-item";
+            li.innerHTML = `
+              <div class="history-details">
+                <div class="history-phrase">${item.frase}</div>
+                <div class="history-meta">
+                  <strong>Topic:</strong> ${item.tema}<br/>
+                  <strong>Feedback:</strong> ${item.feedback}
+                  ${item.audio_url ? `<br/><audio controls src="${API_URL}${item.audio_url}" style="margin-top: 8px; width: 100%;"></audio>` : ""}
+                </div>
+              </div>
+              <div class="history-score">${item.puntaje.toFixed(0)}</div>
+            `;
+            historyList.appendChild(li);
+          });
+        }
+      } catch (e) {
+        console.error("Error al cargar perfil:", e);
+      }
+    }
+
+    // Update profile
+    document.getElementById("btnUpdateProfile").onclick = async () => {
+      const { email } = getSession();
+      const newUsername = document.getElementById("profileUsername").value.trim();
+      if (!newUsername) return showAlert("El nombre de usuario no puede estar vacío", "error");
+
+      try {
+        await putData(`/usuarios/${email}/perfil`, { username: newUsername });
+        showAlert("Perfil actualizado ✅", "success");
+        await cargarPerfilYEstadisticas(email);
+      } catch {
+        showAlert("Error al actualizar perfil", "error");
+      }
+    };
+
+    // Generate sentence
+    let oracionActual = "";
+    let audioBlob = null;
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    document.getElementById("btnGenerar").onclick = async () => {
+      const tema = document.getElementById("temaSelect").value;
+      document.getElementById("audioPreview").src = "";
+      document.getElementById("audioControls").style.display = "none";
+      document.getElementById("resultadoSection").style.display = "none";
+      document.getElementById("fraseGenerada").textContent = "Generando oración...";
+
+      try {
+        const data = await getData(`/generar_oracion/${encodeURIComponent(tema)}`);
+        oracionActual = data.frase;
+        document.getElementById("fraseGenerada").textContent = oracionActual;
+        showAlert("Oración generada ✅", "success");
+      } catch {
+        document.getElementById("fraseGenerada").textContent = "Error al generar oración ❌";
+        showAlert("Error al generar oración", "error");
+      }
+    };
+
+    // Record audio
+    document.getElementById("btnGrabar").onclick = async () => {
+      const btn = document.getElementById("btnGrabar");
+      const hint = document.getElementById("recordHint");
+
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+          mediaRecorder.onstop = () => {
+            audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+            const audioPreview = document.getElementById("audioPreview");
+            audioPreview.src = URL.createObjectURL(audioBlob);
+            audioPreview.style.display = "block";
+            document.getElementById("audioControls").style.display = "flex";
+            document.getElementById("btnEnviar").disabled = false;
+
+            stream.getTracks().forEach(track => track.stop());
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          btn.classList.add("recording");
+          hint.textContent = "Grabando... Presiona de nuevo para detener.";
+          showAlert("Grabando 🎙️", "info");
+        } catch {
+          showAlert("Error al acceder al micrófono", "error");
+        }
+      } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        btn.classList.remove("recording");
+        hint.textContent = "Presiona el botón para comenzar a grabar.";
+        showAlert("Grabación detenida ⏹️", "info");
+      }
+    };
+
+    // Analyze pronunciation
+    document.getElementById("btnEnviar").onclick = async () => {
+      if (!audioBlob || !oracionActual) return showAlert("No hay audio u oración disponible", "error");
+      const { email } = getSession();
+      const tema = document.getElementById("temaSelect").value;
+
+      const formData = new FormData();
+      formData.append("audio", audioBlob, "voz.wav");
+      formData.append("frase", oracionActual);
+      formData.append("usuario_email", email);
+      formData.append("tema", tema);
+
+      try {
+        showAlert("Analizando pronunciación...", "info");
+        const data = await postFile("/analizar_pronunciacion_audio/", formData);
+
+        document.getElementById("transcripcion").textContent = data.transcripcion;
+        document.getElementById("puntaje").textContent = data.porcentaje.toFixed(0);
+        document.getElementById("nivel").textContent = `Level: ${data.nivel}`;
+        document.getElementById("feedback").textContent = data.feedback;
+
+        const scoreCircle = document.getElementById("scoreCircle");
+        scoreCircle.style.setProperty('--score', `${data.porcentaje}%`);
+
+        document.getElementById("resultadoSection").style.display = "block";
+
+        if (data.audio_url) {
+          const audioFinal = document.getElementById("audioFinal");
+          audioFinal.src = `${API_URL}${data.audio_url}`;
+          audioFinal.style.display = "block";
+        }
+
+        showAlert("Análisis completado ✅", "success");
+        await cargarPerfilYEstadisticas(email);
+        document.getElementById("btnEnviar").disabled = true;
+      } catch (e) {
+        console.error("Error:", e);
+        showAlert("Error al analizar pronunciación", "error");
+      }
+    };
+  </script>
+</body>
+
+</html>

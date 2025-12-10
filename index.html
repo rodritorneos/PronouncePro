@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PronouncePro - Plataforma de Pronunciación en Inglés</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      padding: 20px 40px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+      transform: rotate(45deg);
+      border-radius: 4px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: -0.3px;
+    }
+
+    .logo-img {
+      width: 37px;
+      /* Ajusta el tamaño horizontal del logo */
+      height: auto;
+      /* Mantiene la proporción */
+      margin-right: 10px;
+      /* Espacio entre logo y texto */
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background Icons */
+    .bg-icon {
+      position: absolute;
+      opacity: 0.08;
+    }
+
+    .icon-mic-1 {
+      top: 15%;
+      left: 15%;
+      font-size: 100px;
+    }
+
+    .icon-book {
+      top: 10%;
+      right: 12%;
+      font-size: 120px;
+    }
+
+    .icon-wave {
+      bottom: 15%;
+      right: 20%;
+      font-size: 80px;
+    }
+
+    /* Content Container */
+    .content-container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .main-title {
+      font-size: 48px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 60px;
+      font-weight: 400;
+    }
+
+    /* Cards Container */
+    .cards-container {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px 30px;
+      width: 280px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(33, 150, 243, 0.15);
+    }
+
+    .card-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .student-icon {
+      color: #2196F3;
+    }
+
+    .teacher-icon {
+      color: #2196F3;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        padding: 16px 20px;
+      }
+
+      .main-title {
+        font-size: 32px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        margin-bottom: 40px;
+      }
+
+      .cards-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .bg-icon {
+        opacity: 0.05;
+      }
+    }
+
+    /* Icon SVGs inline */
+    .graduation-cap {
+      display: inline-block;
+      width: 48px;
+      height: 48px;
+    }
+
+    .presentation {
+      display: inline-block;
+      width: 48px;
+      height: 48px;
+    }
+
+    @media (max-width: 768px) {
+      .logo-img {
+        width: 45px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo-container">
+      <!-- <div class="logo-icon"></div> -->
+      <img src="images/images.png" alt="Logo de PronouncePro" class="logo-img">
+      <span class="logo-text">PronouncePro</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Background Icons -->
+    <div class="bg-icon icon-mic-1">🎤</div>
+    <div class="bg-icon icon-book">📚</div>
+    <div class="bg-icon icon-wave">〰️</div>
+
+    <div class="content-container">
+      <h1 class="main-title">Plataforma de Pronunciación<br>en Inglés</h1>
+      <p class="subtitle">Mejora tu pronunciación con inteligencia artificial</p>
+
+      <div class="cards-container">
+        <!-- Card Estudiante -->
+        <a href="usuarios.html" class="card">
+          <span class="card-icon student-icon">
+            <svg class="graduation-cap" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z" />
+            </svg>
+          </span>
+          <h2 class="card-title">Entrar como Estudiante</h2>
+          <p class="card-description">Accede a tus lecciones y practica tu pronunciación.</p>
+        </a>
+
+        <!-- Card Docente -->
+        <a href="docentes.html" class="card">
+          <span class="card-icon teacher-icon">
+            <svg class="presentation" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12zm-5-6l-7 4V7z" />
+            </svg>
+          </span>
+          <h2 class="card-title">Entrar como Docente</h2>
+          <p class="card-description">Gestiona tus cursos y sigue el progreso de tus alumnos.</p>
+        </a>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
