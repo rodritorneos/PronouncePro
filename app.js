@@ -4,7 +4,7 @@
 
 // const API_URL = "https://supermediocre-overspeedily-eugena.ngrok-free.dev"; // Cambia si tu backend usa otro puerto
 // const API_URL = "https://mineral-kenny-clip-arkansas.trycloudflare.com"; // Cambia si tu backend usa otro puerto
-const API_URL = "https://internal-iii-either-blank.trycloudflare.com"; // Cambia si tu backend usa otro puerto
+const API_URL = "https://translator-friend-laboratory-reduces.trycloudflare.com"; // Cambia si tu backend usa otro puerto
 
 // ===========================================
 // === FUNCIONES GENERALES PARA EL FRONTEND ===
